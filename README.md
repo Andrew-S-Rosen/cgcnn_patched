@@ -11,7 +11,7 @@ For the original implementation, see https://github.com/txie-93/cgcnn.
 This revision addresses a few minor issues:
 
 1. Patches the original code to be compatible with PyTorch 2.6.
-2. It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
+2. It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18#issuecomment-603635828). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
 3. The predict.py script was fixed, and several minor changes were made to the log file.
 4. An additional atom_init.json file was supplied, in part to address the issue raised [here](https://github.com/txie-93/cgcnn/issues/2). It makes no difference though in the end.
 
