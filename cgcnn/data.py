@@ -346,9 +346,7 @@ class CIFData(Dataset):
         assert os.path.exists(id_prop_file), "id_prop.csv does not exist!"
         with open(id_prop_file) as f:
             reader = csv.reader(f)
-            self.id_prop_data = [
-                [x.strip().replace("\ufeff", "") for x in row] for row in reader
-            ]
+            self.id_prop_data = [[x.strip() for x in row] for row in reader]
         random.seed(random_seed)
         random.shuffle(self.id_prop_data)
         atom_init_file = os.path.join(self.root_dir, "atom_init.json")
@@ -363,7 +361,6 @@ class CIFData(Dataset):
     @functools.lru_cache(maxsize=None)  # Cache loaded structures
     def __getitem__(self, idx):
         cif_id, target = self.id_prop_data[idx]
-        cif_id = cif_id.replace("ï»¿", "")
         target = torch.Tensor([float(target)])
 
         if os.path.exists(os.path.join(self.torch_data_path, cif_id + ".pkl")):

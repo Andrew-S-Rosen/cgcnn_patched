@@ -1,6 +1,12 @@
 # Crystal Graph Convolutional Neural Networks
 
-This software package implements the Crystal Graph Convolutional Neural Networks (CGCNN) that takes an arbitary crystal structure to predict material properties. 
+## Note
+
+This is not the original implementation. For the original implementation, see https://github.com/txie-93/cgcnn. This repository is for pedagogical purposes.
+
+## Overview
+
+This software package implements the Crystal Graph Convolutional Neural Networks (CGCNN) that takes an arbitary crystal structure to predict material properties.
 
 The package provides two major functions:
 
@@ -12,9 +18,10 @@ The following paper describes the details of the CGCNN framework:
 [Crystal Graph Convolutional Neural Networks for an Accurate and Interpretable Prediction of Material Properties](https://link.aps.org/doi/10.1103/PhysRevLett.120.145301)
 
 This revision addresses a few minor issues:
-1) It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
-2) The predict.py script was fixed, and several minor changes were made to the log file.
-3) A new atom_init.json file was made, in part to address the issue raised [here](https://github.com/txie-93/cgcnn/issues/2). It makes no difference though in the end.
+
+1. It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
+2. The predict.py script was fixed, and several minor changes were made to the log file.
+3. A new atom_init.json file was made, in part to address the issue raised [here](https://github.com/txie-93/cgcnn/issues/2). It makes no difference though in the end.
 
 ## Table of Contents
 
@@ -49,30 +56,30 @@ Please cite the following work if you want to use CGCNN.
 }
 ```
 
-##  Prerequisites
+## Prerequisites
 
 This package requires:
 
-- [PyTorch](http://pytorch.org) (tested on v.1.4.0)
-- [scikit-learn](http://scikit-learn.org/stable/) (tested on v.0.22.1)
-- [pymatgen](http://pymatgen.org) (tested on v.2020.3.13)
+- [PyTorch](http://pytorch.org) (tested on v.2.6.0)
+- [scikit-learn](http://scikit-learn.org/stable/) (tested on v.1.6.1)
+- [pymatgen](http://pymatgen.org) (tested on v.2025.3.10)
 
 If you are new to Python, the easiest way of installing the prerequisites is via [conda](https://conda.io/docs/index.html) and `pip`. After installing [conda](http://conda.pydata.org/), run the following command to create a new [environment](https://conda.io/docs/user-guide/tasks/manage-environments.html) named `cgcnn` and install all prerequisites:
 
 ```bash
-conda create -n cgcnn python=3.8
-source activate cgcnn
-conda install pytorch==1.4.0 torchvision cudatoolkit=10.1 -c pytorch 
-conda install scikit-learn
-pip install pymatgen==2020.3.13
+conda create --name cgcnn python=3.12
+conda activate cgcnn
+pip install uv
+uv pip install torch scikit-learn pymatgen
 ```
+
 This creates a conda environment for running CGCNN. Before using CGCNN, activate the environment by:
 
 ```bash
-source activate cgcnn
+conda activate cgcnn
 ```
 
-Then, in directory `cgcnn`, you can test if all the prerequisites are installed properly by running:
+Then, in directory `demo_cgcnn`, you can test if all the prerequisites are installed properly by running:
 
 ```bash
 python main.py -h
@@ -81,24 +88,18 @@ python predict.py -h
 
 This should display the help messages for `main.py` and `predict.py`. If you find no error messages, it means that the prerequisites are installed properly.
 
-After you finished using CGCNN, exit the environment by:
-
-```bash
-source deactivate
-```
-
 ## Usage
 
-### Define a customized dataset 
+### Define a customized dataset
 
-To input crystal structures to CGCNN, you will need to define a customized dataset. Note that this is required for both training and predicting. 
+To input crystal structures to CGCNN, you will need to define a customized dataset. Note that this is required for both training and predicting.
 
 Before defining a customized dataset, you will need:
 
 - [CIF](https://en.wikipedia.org/wiki/Crystallographic_Information_File) files recording the structure of the crystals that you are interested in
 - The target properties for each crystal (not needed for predicting, but you need to put some random numbers in `id_prop.csv`)
 
-You can create a customized dataset by creating a directory `root_dir` with the following files: 
+You can create a customized dataset by creating a directory `root_dir` with the following files:
 
 1. `id_prop.csv`: a [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) file with two columns. The first column recodes a unique `ID` for each crystal, and the second column recodes the value of target property. If you want to predict material properties with `predict.py`, you can put any number in the second column. (The second column is still needed.)
 
@@ -117,7 +118,7 @@ root_dir
 ├── ...
 ```
 
-There are two examples of customized datasets in the repository: `data/sample-regression` for regression and `data/sample-classification` for classification. 
+There are two examples of customized datasets in the repository: `data/sample-regression` for regression and `data/sample-classification` for classification.
 
 **For advanced PyTorch users**
 
@@ -140,7 +141,9 @@ You can set the number of training, validation, and test data with labels `--tra
 ```bash
 python main.py --train-size 6 --val-size 2 --test-size 2 data/sample-regression
 ```
+
 or alternatively
+
 ```bash
 python main.py --train-ratio 0.6 --val-ratio 0.2 --test-ratio 0.2 data/sample-regression
 ```
@@ -195,6 +198,3 @@ This software was originally written by [Tian Xie](http://txie.me) and [Prof. Je
 ## License
 
 CGCNN is released under the MIT License.
-
-
-
