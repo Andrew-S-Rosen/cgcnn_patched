@@ -2,7 +2,7 @@
 
 ## Overview
 
-The following paper describes the details of the CGCNN framework:
+The following paper describes the details of the Crystal Graph Convolutional Neural Network (CGCNN) framework:
 
 [Crystal Graph Convolutional Neural Networks for an Accurate and Interpretable Prediction of Material Properties](https://link.aps.org/doi/10.1103/PhysRevLett.120.145301)
 
