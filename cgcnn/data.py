@@ -336,7 +336,7 @@ class CIFData(Dataset):
         dmin=0,
         step=0.2,
         disable_save_torch=False,
-        random_seed=42,
+        random_seed=123,
     ):
         self.root_dir = root_dir
         self.max_num_nbr, self.radius = max_num_nbr, radius
