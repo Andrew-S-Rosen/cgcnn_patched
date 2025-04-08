@@ -227,10 +227,10 @@ def validate(
         with torch.no_grad():
             input_var = (
                 (
-                    input_[0].to("cuda"),
-                    input_[1].to("cuda"),
-                    input_[2].to("cuda"),
-                    [tensor.to("cuda") for tensor in input_[3]],
+                    input_[0].cuda(non_blocking=True),
+                    input_[1].cuda(non_blocking=True),
+                    input_[2].cuda(non_blocking=True),
+                    [tensor.cuda(non_blocking=True) for tensor in input_[3]],
                 )
                 if args.cuda
                 else input_
@@ -242,7 +242,7 @@ def validate(
             target_normed = target.view(-1).long()
         with torch.no_grad():
             if args.cuda:
-                target_var = target_normed.to("cuda")
+                target_var = target_normed.cuda(non_blocking=True)
             else:
                 target_var = target_normed
 
