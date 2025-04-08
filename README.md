@@ -2,7 +2,7 @@
 
 ## Note
 
-This is not the original implementation. For the original implementation, see https://github.com/txie-93/cgcnn. This repository is for pedagogical purposes.
+For the original implementation, see https://github.com/txie-93/cgcnn.
 
 ## Overview
 
@@ -22,18 +22,6 @@ This revision addresses a few minor issues:
 1. It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
 2. The predict.py script was fixed, and several minor changes were made to the log file.
 3. A new atom_init.json file was made, in part to address the issue raised [here](https://github.com/txie-93/cgcnn/issues/2). It makes no difference though in the end.
-
-## Table of Contents
-
-- [How to cite](#how-to-cite)
-- [Prerequisites](#prerequisites)
-- [Usage](#usage)
-  - [Define a customized dataset](#define-a-customized-dataset)
-  - [Train a CGCNN model](#train-a-cgcnn-model)
-  - [Predict material properties with a pre-trained CGCNN model](#predict-material-properties-with-a-pre-trained-cgcnn-model)
-- [Data](#data)
-- [Authors](#authors)
-- [License](#license)
 
 ## How to cite
 
@@ -64,19 +52,11 @@ This package requires:
 - [scikit-learn](http://scikit-learn.org/stable/) (tested on v.1.6.1)
 - [pymatgen](http://pymatgen.org) (tested on v.2025.3.10)
 
-If you are new to Python, the easiest way of installing the prerequisites is via [conda](https://conda.io/docs/index.html) and `pip`. After installing [conda](http://conda.pydata.org/), run the following command to create a new [environment](https://conda.io/docs/user-guide/tasks/manage-environments.html) named `cgcnn` and install all prerequisites:
-
 ```bash
 conda create --name cgcnn python=3.12
 conda activate cgcnn
 pip install uv
 uv pip install torch scikit-learn pymatgen
-```
-
-This creates a conda environment for running CGCNN. Before using CGCNN, activate the environment by:
-
-```bash
-conda activate cgcnn
 ```
 
 Then, in directory `demo_cgcnn`, you can test if all the prerequisites are installed properly by running:
