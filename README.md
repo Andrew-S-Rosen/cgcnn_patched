@@ -1,14 +1,12 @@
-# Crystal Graph Convolutional Neural Networks
-
-## Note
-
-For the original implementation, see https://github.com/txie-93/cgcnn.
+# Crystal Graph Convolutional Neural Network (CGCNN)
 
 ## Overview
 
 The following paper describes the details of the CGCNN framework:
 
 [Crystal Graph Convolutional Neural Networks for an Accurate and Interpretable Prediction of Material Properties](https://link.aps.org/doi/10.1103/PhysRevLett.120.145301)
+
+For the original implementation, see https://github.com/txie-93/cgcnn.
 
 This revision addresses a few minor issues:
 
