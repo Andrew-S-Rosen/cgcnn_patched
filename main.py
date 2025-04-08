@@ -202,6 +202,11 @@ else:
 def main():
     global args, best_mae_error
 
+    if args.cuda:
+        print(">> Using GPU 🔥")
+    else:
+        print(">> Using CPU 🐢")
+
     # load data
     dataset = CIFData(*args.data_options, disable_save_torch=args.disable_save_torch)
     collate_fn = collate_pool
