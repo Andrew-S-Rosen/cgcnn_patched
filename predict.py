@@ -55,7 +55,7 @@ args = parser.parse_args(sys.argv[1:])
 if os.path.isfile(args.modelpath):
     print("=> loading model params '{}'".format(args.modelpath))
     model_checkpoint = torch.load(
-        args.modelpath, map_location=lambda storage, loc: storage
+        args.modelpath, map_location=lambda storage, loc: storage, weights_only=False
     )
     model_args = argparse.Namespace(**model_checkpoint["args"])
     print("=> loaded model params '{}'".format(args.modelpath))
@@ -148,7 +148,9 @@ def main():
     if os.path.isfile(args.modelpath):
         print("=> loading model '{}'".format(args.modelpath))
         checkpoint = torch.load(
-            args.modelpath, map_location=lambda storage, loc: storage
+            args.modelpath,
+            map_location=lambda storage, loc: storage,
+            weights_only=False,
         )
         model.load_state_dict(checkpoint["state_dict"])
         normalizer.load_state_dict(checkpoint["normalizer"])
