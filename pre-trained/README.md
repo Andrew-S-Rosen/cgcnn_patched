@@ -29,7 +29,7 @@ This directory includes several pre-trained CGCNN models that one can use to pre
 
 ## How to cite
 
-If you used any pre-trained models, please cite both **Data Ref.** and **Model Ref.** because data and model are equally important for a successful machine learning model! 
+If you used any pre-trained models, please cite both **Data Ref.** and **Model Ref.** because data and model are equally important for a successful machine learning model!
 
 ## How to share your pre-trained models
 
@@ -40,4 +40,3 @@ To submit, be sure to include:
 1. A `pth.tar` file storing the CGCNN model.
 2. The type of the model and the target property.
 3. The links to the data reference and model reference.
-

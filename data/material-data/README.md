@@ -8,4 +8,3 @@ The material structures and properties used in [our paper](https://journals.aps.
 We cannot redistribute these two datasets. Users should download these data by themselves and convert them into proper formats. Please cite the relevant papers as requested by the dataset authors.
 
 To reproduce our results exactly, we provide three CSV files that include the materials IDs of the crystals we used in our paper. Note that the Materials Project database is contantly updating, so the structures and properties may have changed since the publication of our paper.
-
