@@ -165,7 +165,7 @@ After predicting, you will get one file in `cgcnn` directory:
 
 ## Authors
 
-This software was originally written by [Tian Xie](http://txie.me) and [Prof. Jeffrey Grossman](https://dmse.mit.edu/faculty/profile/grossman). This slightly modified version was made by the Rosen Research Group.
+This software was originally written by [Tian Xie](http://txie.me) and [Prof. Jeffrey Grossman](https://dmse.mit.edu/faculty/profile/grossman). This slightly modified version was made by Andrew Rosen.
 
 ## License
 
