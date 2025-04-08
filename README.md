@@ -49,9 +49,11 @@ conda create --name cgcnn python=3.12
 conda activate cgcnn
 pip install uv
 uv pip install torch scikit-learn pymatgen
+git clone https://github.com/Andrew-S-Rosen/cgcnn_patched.git
+cd cgcnn_patched
 ```
 
-Then, in directory `cgcnn`, you can test if all the prerequisites are installed properly by running:
+Then, in directory `cgcnn_patched`, you can test if all the prerequisites are installed properly by running:
 
 ```bash
 python main.py -h
@@ -102,7 +104,7 @@ Before training a new CGCNN model, you will need to:
 
 - [Define a customized dataset](#define-a-customized-dataset) at `root_dir` to store the structure-property relations of interest.
 
-Then, in directory `cgcnn`, you can train a CGCNN model for your customized dataset by:
+Then, in directory `cgcnn_patched`, you can train a CGCNN model for your customized dataset by:
 
 ```bash
 python main.py root_dir
@@ -126,7 +128,7 @@ You can also train a classification model with label `--task classification`. Fo
 python main.py --task classification --train-size 5 --val-size 2 --test-size 3 data/sample-classification
 ```
 
-After training, you will get three files in `cgcnn` directory.
+After training, you will get three files in `cgcnn_patched` directory.
 
 - `model_best.pth.tar`: stores the CGCNN model with the best validation accuracy.
 - `checkpoint.pth.tar`: stores the CGCNN model at the last epoch.
@@ -139,7 +141,7 @@ Before predicting the material properties, you will need to:
 - [Define a customized dataset](#define-a-customized-dataset) at `root_dir` for all the crystal structures that you want to predict.
 - Obtain a [pre-trained CGCNN model](pre-trained) named `pre-trained.pth.tar`.
 
-Then, in directory `cgcnn`, you can predict the properties of the crystals in `root_dir`:
+Then, in directory `cgcnn_patched`, you can predict the properties of the crystals in `root_dir`:
 
 ```bash
 python predict.py pre-trained.pth.tar root_dir
@@ -159,7 +161,7 @@ python predict.py pre-trained/semi-metal-classification.pth.tar data/sample-clas
 
 Note that for classification, the predicted values in `test_results.csv` is a probability between 0 and 1 that the crystal can be classified as 1 (metal in the above example).
 
-After predicting, you will get one file in `cgcnn` directory:
+After predicting, you will get one file in `cgcnn_patched` directory:
 
 - `test_results.csv`: stores the `ID`, target value, and predicted value for each crystal in test set. Here the target value is just any number that you set while defining the dataset in `id_prop.csv`, which is not important.
 
