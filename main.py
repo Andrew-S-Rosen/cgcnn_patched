@@ -221,37 +221,6 @@ def main():
         return_test=True,
     )
 
-    # Make sure >1 class is present
-    if args.task == "classification":
-        total_train = 0
-        total_val = 0
-        total_test = 0
-        for i, (_, target, _) in enumerate(train_loader):
-            for target_i in target.squeeze():
-                total_train += target_i
-        if bool(total_train == 0):
-            raise ValueError("All 0s in train")
-        elif bool(total_train == 1):
-            raise ValueError("All 1s in train")
-        for i, (_, target, _) in enumerate(val_loader):
-            if len(target) == 1:
-                raise ValueError("Only single entry in val")
-            for target_i in target.squeeze():
-                total_val += target_i
-        if bool(total_val == 0):
-            raise ValueError("All 0s in val")
-        elif bool(total_val == 1):
-            raise ValueError("All 1s in val")
-        for i, (_, target, _) in enumerate(test_loader):
-            if len(target) == 1:
-                raise ValueError("Only single entry in test")
-            for target_i in target.squeeze():
-                total_test += target_i
-        if bool(total_test == 0):
-            raise ValueError("All 0s in test")
-        elif bool(total_test == 1):
-            raise ValueError("All 1s in test")
-
     # make output folder if needed
     if not os.path.exists("output"):
         os.mkdir("output")

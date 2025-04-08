@@ -7,7 +7,7 @@ class ConvLayer(nn.Module):
     Convolutional operation on graphs
     """
 
-    def __init__(self, atom_fea_len, nbr_fea_len):
+    def __init__(self, atom_fea_len: int, nbr_fea_len: int) -> None:
         """
         Initialize ConvLayer.
 
@@ -88,13 +88,13 @@ class CrystalGraphConvNet(nn.Module):
 
     def __init__(
         self,
-        orig_atom_fea_len,
-        nbr_fea_len,
-        atom_fea_len=64,
-        n_conv=3,
-        h_fea_len=128,
-        n_h=1,
-        classification=False,
+        orig_atom_fea_len: int,
+        nbr_fea_len: int,
+        atom_fea_len: int = 64,
+        n_conv: int = 3,
+        h_fea_len: int = 128,
+        n_h: int = 1,
+        classification: bool = False,
     ):
         """
         Initialize CrystalGraphConvNet.
@@ -139,7 +139,13 @@ class CrystalGraphConvNet(nn.Module):
             self.logsoftmax = nn.LogSoftmax(dim=1)
             self.dropout = nn.Dropout()
 
-    def forward(self, atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx):
+    def forward(
+        self,
+        atom_fea: torch.Tensor,
+        nbr_fea: torch.Tensor,
+        nbr_fea_idx: torch.LongTensor,
+        crystal_atom_idx: list[torch.LongTensor],
+    ):
         """
         Forward pass
 
@@ -182,7 +188,9 @@ class CrystalGraphConvNet(nn.Module):
             out = self.logsoftmax(out)
         return out
 
-    def pooling(self, atom_fea, crystal_atom_idx):
+    def pooling(
+        self, atom_fea: torch.Tensor, crystal_atom_idx: list[torch.LongTensor]
+    ) -> torch.Tensor:
         """
         Pooling the atom features to crystal features
 
