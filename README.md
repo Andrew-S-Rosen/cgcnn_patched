@@ -51,7 +51,7 @@ pip install uv
 uv pip install torch scikit-learn pymatgen
 ```
 
-Then, in directory `demo_cgcnn`, you can test if all the prerequisites are installed properly by running:
+Then, in directory `cgcnn`, you can test if all the prerequisites are installed properly by running:
 
 ```bash
 python main.py -h
