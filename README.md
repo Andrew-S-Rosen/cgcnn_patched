@@ -11,6 +11,11 @@ The following paper describes the details of the CGCNN framework:
 
 [Crystal Graph Convolutional Neural Networks for an Accurate and Interpretable Prediction of Material Properties](https://link.aps.org/doi/10.1103/PhysRevLett.120.145301)
 
+This revision addresses a few minor issues:
+1) It is easy for the crystal graph cache to be dumped, causing significant slowdown in the data processing end, as mentioned [here](https://github.com/txie-93/cgcnn/pull/18). This version will automatically write .pkl files for each structure so the features do not have to be regenerated on-the-fly.
+2) The predict.py script was fixed, and several minor changes were made to the log file.
+3) A new atom_init.json file was made, in part to address the issue raised [here](https://github.com/txie-93/cgcnn/issues/2). It makes no difference though in the end.
+
 ## Table of Contents
 
 - [How to cite](#how-to-cite)
@@ -48,19 +53,19 @@ Please cite the following work if you want to use CGCNN.
 
 This package requires:
 
-- [PyTorch](http://pytorch.org)
-- [scikit-learn](http://scikit-learn.org/stable/)
-- [pymatgen](http://pymatgen.org)
+- [PyTorch](http://pytorch.org) (tested on v.1.4.0)
+- [scikit-learn](http://scikit-learn.org/stable/) (tested on v.0.22.1)
+- [pymatgen](http://pymatgen.org) (tested on v.2020.3.13)
 
-If you are new to Python, the easiest way of installing the prerequisites is via [conda](https://conda.io/docs/index.html). After installing [conda](http://conda.pydata.org/), run the following command to create a new [environment](https://conda.io/docs/user-guide/tasks/manage-environments.html) named `cgcnn` and install all prerequisites:
+If you are new to Python, the easiest way of installing the prerequisites is via [conda](https://conda.io/docs/index.html) and `pip`. After installing [conda](http://conda.pydata.org/), run the following command to create a new [environment](https://conda.io/docs/user-guide/tasks/manage-environments.html) named `cgcnn` and install all prerequisites:
 
 ```bash
-conda upgrade conda
-conda create -n cgcnn python=3 scikit-learn pytorch torchvision pymatgen -c pytorch -c conda-forge
+conda create -n cgcnn python=3.8
+source activate cgcnn
+conda install pytorch==1.4.0 torchvision cudatoolkit=10.1 -c pytorch 
+conda install scikit-learn
+pip install pymatgen==2020.3.13
 ```
-
-*Note: this code is tested for PyTorch v1.0.0+ and is not compatible with versions below v0.4.0 due to some breaking changes.
-
 This creates a conda environment for running CGCNN. Before using CGCNN, activate the environment by:
 
 ```bash
@@ -183,13 +188,9 @@ After predicting, you will get one file in `cgcnn` directory:
 
 - `test_results.csv`: stores the `ID`, target value, and predicted value for each crystal in test set. Here the target value is just any number that you set while defining the dataset in `id_prop.csv`, which is not important.
 
-## Data
-
-To reproduce our paper, you can download the corresponding datasets following the [instruction](data/material-data).
-
 ## Authors
 
-This software was primarily written by [Tian Xie](http://txie.me) who was advised by [Prof. Jeffrey Grossman](https://dmse.mit.edu/faculty/profile/grossman). 
+This software was originally written by [Tian Xie](http://txie.me) and [Prof. Jeffrey Grossman](https://dmse.mit.edu/faculty/profile/grossman). This slightly modified version was made by the Rosen Research Group.
 
 ## License
 
