@@ -9,7 +9,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 from sklearn import metrics
-from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
 from cgcnn.data import CIFData, collate_pool, get_train_val_test_loader
@@ -226,19 +225,26 @@ def validate(
     end = time.time()
     for i, (input_, target, batch_cif_ids) in enumerate(val_loader):
         with torch.no_grad():
-            if args.cuda:
-                input_var = (tensor.to("cuda") for tensor in input_)
-            else:
-                input_var = input_
+            input_var = (
+                (
+                    input_[0].to("cuda"),
+                    input_[1].to("cuda"),
+                    input_[2].to("cuda"),
+                    [tensor.to("cuda") for tensor in input_[3]],
+                )
+                if args.cuda
+                else input_
+            )
+
         if model_args.task == "regression":
             target_normed = normalizer.norm(target)
         else:
             target_normed = target.view(-1).long()
         with torch.no_grad():
             if args.cuda:
-                target_var = Variable(target_normed.cuda(non_blocking=True))
+                target_var = target_normed.to("cuda")
             else:
-                target_var = Variable(target_normed)
+                target_var = target_normed
 
         # compute output
         output = model(*input_var)

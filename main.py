@@ -12,7 +12,6 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from sklearn import metrics
-from torch.autograd import Variable
 from torch.optim.lr_scheduler import MultiStepLR
 
 from cgcnn.data import CIFData, collate_pool, get_train_val_test_loader
@@ -342,7 +341,10 @@ def main():
         )
 
     # test best model
-    best_checkpoint = torch.load(os.path.join("output", "model_best.pth.tar"))
+    best_checkpoint = torch.load(
+        os.path.join("output", "model_best.pth.tar"),
+        weights_only=False,
+    )
     model.load_state_dict(best_checkpoint["state_dict"])
     print("---------Evaluate Best Model on Train Set---------------")
     validate(
@@ -389,10 +391,16 @@ def train(train_loader, model, criterion, optimizer, epoch, normalizer):
         # measure data loading time
         data_time.update(time.time() - end)
 
-        if args.cuda:
-            input_var = (tensor.to("cuda") for tensor in input_)
-        else:
-            input_var = input_
+        input_var = (
+            (
+                input_[0].to("cuda"),
+                input_[1].to("cuda"),
+                input_[2].to("cuda"),
+                [tensor.to("cuda") for tensor in input_[3]],
+            )
+            if args.cuda
+            else input_
+        )
 
         # normalize target
         if args.task == "regression":
@@ -400,9 +408,9 @@ def train(train_loader, model, criterion, optimizer, epoch, normalizer):
         else:
             target_normed = target.view(-1).long()
         if args.cuda:
-            target_var = Variable(target_normed.cuda(non_blocking=True))
+            target_var = target_normed.to("cuda")
         else:
-            target_var = Variable(target_normed)
+            target_var = target_normed
 
         # compute output
         output = model(*input_var)
@@ -499,22 +507,27 @@ def validate(
 
     end = time.time()
     for i, (input_, target, batch_cif_ids) in enumerate(val_loader):
-        if args.cuda:
-            with torch.no_grad():
-                input_var = (tensor.to("cuda") for tensor in input_)
-        else:
-            with torch.no_grad():
-                input_var = input_
+        with torch.no_grad():
+            input_var = (
+                (
+                    input_[0].to("cuda"),
+                    input_[1].to("cuda"),
+                    input_[2].to("cuda"),
+                    [tensor.to("cuda") for tensor in input_[3]],
+                )
+                if args.cuda
+                else input_
+            )
         if args.task == "regression":
             target_normed = normalizer.norm(target)
         else:
             target_normed = target.view(-1).long()
         if args.cuda:
             with torch.no_grad():
-                target_var = Variable(target_normed.cuda(non_blocking=True))
+                target_var = target_normed.to("cuda")
         else:
             with torch.no_grad():
-                target_var = Variable(target_normed)
+                target_var = target_normed
 
         # compute output
         output = model(*input_var)
